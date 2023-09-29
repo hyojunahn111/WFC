@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378510407363",
+    "project_id": "whats-your-favorite-cocktail",
+    "storage_bucket": "whats-your-favorite-cocktail.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378510407363:android:1b521bae5520c6251b1476",
+        "android_client_info": {
+          "package_name": "com.example.wfc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYOcJQkZdb5o6Bce7YNWE0uW49VDv-s8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

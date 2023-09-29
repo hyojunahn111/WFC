@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity"
+    android:background="#84E7EC">
+
+    <Button
+        android:id="@+id/appstartbt"
+        android:paddingTop="140dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00ff0000"
+        android:drawableTop="@drawable/startcock_im"
+        android:text="화면을 클릭해서 다음 화면으로 넘어가주세요" />
+
+
+
+
+</LinearLayout>
