@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     // 유저정보 넘겨주고 메인 액티비티 호출
     private void moveMainPage(FirebaseUser user){
         if(user != null){
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, LogoutActivity.class));
             finish();
         }
     }
