@@ -19,13 +19,18 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        auth = FirebaseAuth.getInstance();
+
         stbt = (Button) findViewById(R.id.appstartbt);
 
         stbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                if(auth.getCurrentUser() != null){
+                    startActivity(new Intent(StartActivity.this, LogoutActivity.class));
+                } else {
+                    startActivity(new Intent(StartActivity.this, LoginActivity.class));
+                }
             }
         });
     }
