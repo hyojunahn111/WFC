@@ -2,6 +2,7 @@ package com.example.wfc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,7 +33,18 @@ public class LogoutActivity extends AppCompatActivity {
             startActivity(intent);
 
             auth.signOut();
+
         });
+
+        Button cocknewaddbt = findViewById(R.id.cocknewaddbt);
+        cocknewaddbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddNewCocktail.class);
+                startActivity(intent);
+            }
+        }); //칵테일 등록하는 버튼 -> 칵테일 등록하는 곳으로 이동
+
 
 
 
@@ -41,7 +53,7 @@ public class LogoutActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AllcocktailActivity.class);
                 startActivity(intent);
-            }
+            } //칵테일 전체 목록을 보는 버튼 -> 칵테일 전체 목록으로 이동
         });
 
 
