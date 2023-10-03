@@ -12,6 +12,13 @@
         android:theme="@style/Theme.WFC"
         tools:targetApi="31">
         <activity
+            android:name=".AddNewCocktail"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AllcocktailActivity"
             android:exported="false">
             <meta-data
