@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(v -> signIn(idEditText.getText().toString(), passwordEditText.getText().toString()));
+
+
     }
 
 /*    @Override
