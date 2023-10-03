@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        tools:context=".AddNewCocktail"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editTextCocktailName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="칵테일 이름"
+            />
+
+        <EditText
+            android:id="@+id/editTextCockSimpleExplan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="간단한 각테일 설명"
+            />
+
+        <EditText
+            android:id="@+id/editTextTechniques"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="기법"
+            />
+
+        <EditText
+            android:id="@+id/editTextGlassName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="칵테일 잔 이름"
+            />
+
+        <EditText
+            android:id="@+id/editTextGarnish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="가니쉬"
+            />
+
+        <EditText
+            android:id="@+id/editTextRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="칵테일 레시피"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/text_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나는 텍스트입니다."
+            />
+
+        <Button
+            android:id="@+id/button_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="db에 추가하기"
+            />
+
+    </LinearLayout>
+</ScrollView>
