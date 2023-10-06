@@ -50,4 +50,14 @@ public class FirebaseData {
         public void setCocktailNum(int number){
             this.cocktailNum = number;
         }
+
+    public String getCockSimpleExplan() {return cockSimpleExplan;}
+
+    public String getTechniques() {return techniques;}
+
+    public String getGlassName() {return glassName;}
+
+    public String getGarnish() {return garnish;}
+
+    public String getRecipe() {return recipe;}
 }
