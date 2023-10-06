@@ -9,8 +9,8 @@ import com.example.wfc.databinding.ActivityAddNewCocktailBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddNewCocktail extends AppCompatActivity {
-
     private ActivityAddNewCocktailBinding binding;
+
     private int cocktailNum = 0;
 
     @Override
@@ -38,7 +38,7 @@ public class AddNewCocktail extends AppCompatActivity {
 
     private void setDocument(FirebaseData data) {
         FirebaseFirestore.getInstance()
-                .collection("sampleCollection")
+                .collection("cocktail")
                 .document(String.valueOf(data.getCocktailNum()))
                 .set(data)
                 .addOnSuccessListener(aVoid -> binding.textResult.setText("success!"))
