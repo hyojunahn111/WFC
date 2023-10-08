@@ -30,7 +30,7 @@ public class AllcocktailActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewCocktails);
 
-        db.collection("cocktail").get().addOnCompleteListener(task -> {
+        db.collection("cocktails").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 List<FirebaseData> cocktails = new ArrayList<>();
                 for (QueryDocumentSnapshot document : task.getResult()) {
