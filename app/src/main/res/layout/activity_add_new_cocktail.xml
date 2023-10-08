@@ -59,7 +59,8 @@
             android:id="@+id/text_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나는 텍스트입니다."
+            android:gravity="center"
+            android:hint="이 text는 저장 성공 실패를 알려줍니다."
             />
 
         <Button
