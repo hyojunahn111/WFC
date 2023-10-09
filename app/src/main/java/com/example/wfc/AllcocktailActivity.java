@@ -105,7 +105,9 @@ public class AllcocktailActivity extends AppCompatActivity {
         } else {
             // 검색어가 있을 때는 해당하는 데이터만 가져옵니다.
             db.collection("cocktails")
-                    .whereEqualTo("cocktailName", text)  // "cocktailName" 필드가 검색어와 일치하는 문서만 선택
+                    .orderBy("cocktailName")  // "cocktailName" 필드 기준으로 정렬
+                    .startAt(text)  // 검색어로 시작하는 문서 선택
+                    .endAt(text + "\uf8ff")  // 검색어로 시작하고 어떤 문자든지 뒤따르는 문서 선택 ("\uf8ff"는 유니코드에서 가장 큰 값)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -121,6 +123,7 @@ public class AllcocktailActivity extends AppCompatActivity {
                     });
         }
     }
+
 }
 
 class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder> {
