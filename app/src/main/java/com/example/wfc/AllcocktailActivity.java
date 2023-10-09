@@ -171,7 +171,7 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
 
     // Update the adapter to filter the list
 
-/*    public void filterList(List<FirebaseData> queryList) {
+    public void filterList(List<FirebaseData> queryList) {
         filteredCocktails.clear();
         if (queryList.isEmpty()) {
             filteredCocktails.addAll(originalCocktails);
@@ -180,7 +180,7 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         }
         notifyDataSetChanged();  // Notify the adapter that data set has changed which triggers UI update.
     }
-}*/
+}
 
 
 /*
