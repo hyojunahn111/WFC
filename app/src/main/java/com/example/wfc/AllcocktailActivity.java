@@ -87,7 +87,7 @@ public class AllcocktailActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-/*    private void filter(String text) {
+    private void filter(String text) {
         if (text.isEmpty()) {
             // 검색창이 비었을 때는 모든 데이터를 다시 가져옵니다.
             db.collection("cocktails").get().addOnCompleteListener(task -> {
@@ -120,7 +120,7 @@ public class AllcocktailActivity extends AppCompatActivity {
                         }
                     });
         }
-    }*/
+    }
 }
 
 class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder> {
