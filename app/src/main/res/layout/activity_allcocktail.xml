@@ -4,12 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AllcocktailActivity">
+    tools:context=".AllcocktailActivity"
+    android:id="@+id/mainLayout">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:paddingLeft="20dp"
-        android:id="@+id/recyclerViewCocktails"
+    <EditText
+        android:id="@+id/editTextSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCocktails"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextSearch"/>
 
 </RelativeLayout>
