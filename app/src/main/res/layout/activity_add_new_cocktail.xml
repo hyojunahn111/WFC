@@ -12,12 +12,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <Button
+            android:id="@+id/imageaddbutton"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/plusbt_im"
+            android:layout_weight="1"
+            android:hint="그림을\n추가하려면\n 클릭해주세요."
+
+            />
+
         <EditText
             android:id="@+id/editTextCocktailName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="칵테일 이름"
-            />
+            android:layout_weight="1" />
+
+
+
 
         <EditText
             android:id="@+id/editTextCockSimpleExplan"
@@ -54,6 +69,8 @@
             android:hint="칵테일 레시피"
             android:layout_gravity="center"
             />
+
+
 
         <TextView
             android:id="@+id/text_result"
