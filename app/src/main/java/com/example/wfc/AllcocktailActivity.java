@@ -62,7 +62,7 @@ public class AllcocktailActivity extends AppCompatActivity {
 
         View mainLayout = findViewById(R.id.mainLayout);  // 이 뷰는 activity_allcocktail.xml 파일에서 가장 바깥쪽에 있는 레이아웃의 id여야 합니다.
         mainLayout.setOnTouchListener((v, event) -> {
-            editTextSearch.setText("");  // 검색창 초기화 //이 코드드 사용 시 검색창이 아닌 화면을 레이아웃을 눌렀을 때 검색창이 초기화 되고 키보드가 내려감
+            /*editTextSearch.setText("");*/  // 검색창 초기화 //이 코드드 사용 시 검색창이 아닌 화면을 레이아웃을 눌렀을 때 검색창이 초기화 되고 키보드가 내려감
             hideKeyboard(v);
             return true;
         });
