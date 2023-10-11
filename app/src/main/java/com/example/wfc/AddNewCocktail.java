@@ -2,14 +2,21 @@ package com.example.wfc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.wfc.databinding.ActivityAddNewCocktailBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class AddNewCocktail extends AppCompatActivity {
+
+    Button imageaddbutton;
+    final int GET_GALLERY_IMAGE = 200;
+
     private ActivityAddNewCocktailBinding binding;
 
     private int cocktailNum = 0;
@@ -35,6 +42,17 @@ public class AddNewCocktail extends AppCompatActivity {
                 setDocument(data);
             }
         });
+
+        imageaddbutton = (Button) findViewById(R.id.imageaddbutton);
+        imageaddbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent,GET_GALLERY_IMAGE);
+            }
+        });
+
     }
 
 /*    private void setDocument(FirebaseData data) {
@@ -68,4 +86,5 @@ public class AddNewCocktail extends AppCompatActivity {
                             .addOnFailureListener(e -> binding.textResult.setText("fail!"));
                 });
     }
+
 }
