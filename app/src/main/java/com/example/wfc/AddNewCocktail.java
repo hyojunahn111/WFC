@@ -7,15 +7,21 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.wfc.databinding.ActivityAddNewCocktailBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
 
 public class AddNewCocktail extends AppCompatActivity {
 
     Button imageaddbutton;
     final int GET_GALLERY_IMAGE = 200;
+
+    private final int GALLERY_CODE = 10;
+    ImageView addnewpicture;
+    private FirebaseStorage storage;
 
     private ActivityAddNewCocktailBinding binding;
 
@@ -52,6 +58,11 @@ public class AddNewCocktail extends AppCompatActivity {
                 startActivityForResult(intent,GET_GALLERY_IMAGE);
             }
         });
+
+        addnewpicture = (ImageView) findViewById(R.id.addimv);
+        
+
+
 
     }
 
