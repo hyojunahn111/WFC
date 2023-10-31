@@ -3,6 +3,7 @@ package com.example.wfc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.example.wfc.databinding.ActivityAddNewCocktailBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class AddNewCocktail extends AppCompatActivity {
 
@@ -79,6 +82,17 @@ public class AddNewCocktail extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, GALLERY_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, final Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == GALLERY_CODE){
+            Uri file = data.getData();
+            StorageReference storageReference = storage.getReference();
+            StorageReference riversReference = storageReference.child("phote/1.png");
+            UploadTask uploadTask = riversReference.putFile(file);
+        }
     }
 
 /*    private void setDocument(FirebaseData data) {
