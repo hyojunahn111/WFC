@@ -3,6 +3,8 @@ package com.example.wfc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +18,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.InputStream;
 
 public class AddNewCocktail extends AppCompatActivity {
 
@@ -89,9 +93,18 @@ public class AddNewCocktail extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GALLERY_CODE){
             Uri file = data.getData();
-            StorageReference storageReference = storage.getReference();
-            StorageReference riversReference = storageReference.child("phote/1.png");
+            StorageReference storageReference = storage.getReference(); //Firebase의 Cloud Storage에 접근하기 위한 StorageReference 객체를 생성
+            StorageReference riversReference = storageReference.child("phote/1.png"); //Cloud Storage의 "photo" 폴더 아래에 "1.png"라는 이름으로 파일을 저장하도록 설정
             UploadTask uploadTask = riversReference.putFile(file);
+
+            try{
+                InputStream in = getContentResolver().openInputStream(data.getData());
+                Bitmap img = BitmapFactory.decodeStream(in);
+                in.close();
+                addnewpicture.setImageBitmap(img);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
