@@ -59,11 +59,26 @@ public class AddNewCocktail extends AppCompatActivity {
             }
         });
 
-        addnewpicture = (ImageView) findViewById(R.id.addimv);
-        
+        findViewById(R.id.addimv).setOnClickListener(onClickListener);
+        addnewpicture=(ImageView)findViewById(R.id.addimv);
+        storage=FirebaseStorage.getInstance();
+    }
 
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.addimv:
+                    loadAlbum();
+                    break;
+            }
+        }
+    };
 
-
+    private void loadAlbum(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, GALLERY_CODE);
     }
 
 /*    private void setDocument(FirebaseData data) {
