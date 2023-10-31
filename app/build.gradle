@@ -59,5 +59,5 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-database:19.7.0'
 
-    implementation 'com.google.firebase:firebase-storage' //firebase storage에 접근하기 위한 implementation 추가
+    implementation 'com.google.firebase:firebase-storage:19.2.2' //firebase storage에 접근하기 위한 implementation 추가
 }
