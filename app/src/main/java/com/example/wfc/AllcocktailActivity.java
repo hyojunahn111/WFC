@@ -18,8 +18,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -151,6 +153,9 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         holder.textViewCocktailName.setText(cocktail.getCocktailName());
         holder.textViewCockSimpleExplan.setText(cocktail.getCockSimpleExplan());
 
+        Glide.with(holder.itemView.getContext())
+                .load(cocktail.getImageUrl())
+                .into(holder.imageViewCocktail);
     }
 
     @Override
@@ -163,12 +168,14 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         TextView textViewCocktailNum;
         TextView textViewCocktailName;
         TextView textViewCockSimpleExplan;
+        ImageView imageViewCocktail;
 
         public CocktailViewHolder(View itemView) {
             super(itemView);
             textViewCocktailNum = itemView.findViewById(R.id.textViewCocktailNum);
             textViewCocktailName = itemView.findViewById(R.id.textViewCocktailName);
             textViewCockSimpleExplan = itemView.findViewById(R.id.textViewCockSimpleExplan);
+            imageViewCocktail = itemView.findViewById(R.id.imageViewCocktail);  // 초기화
         }
     }
 
