@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +47,18 @@ public class MainActivity extends AppCompatActivity {
     private void createAccount(String email, String password) {
          if (!email.isEmpty() && !password.isEmpty())
          {
+             if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+             {
+                 Toast.makeText(MainActivity.this, "이메일 형식으로 입력해주세요!", Toast.LENGTH_SHORT).show();
+                 return;
+             }
+
+             if(password.length() < 6)
+             {
+                 Toast.makeText(MainActivity.this, "영문,숫자합 6자리 이상으로 입력해주세요!", Toast.LENGTH_SHORT).show();
+                 return;
+             }
+
              auth.createUserWithEmailAndPassword(email, password)
                      .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
                      {
