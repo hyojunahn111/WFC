@@ -155,6 +155,8 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
 
         Glide.with(holder.itemView.getContext())
                 .load(cocktail.getImageUrl())
+                .placeholder(R.drawable.default_img)  // 이미지 로딩 중에 보여줄 이미지
+                .error(R.drawable.default_img)  // 이미지 로딩 실패 시 보여줄 이미지
                 .into(holder.imageViewCocktail);
     }
 
