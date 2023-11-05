@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ public class AddNewCocktail extends AppCompatActivity {
     private final int GALLERY_CODE = 10;
     ImageView addnewpicture;
     private FirebaseStorage storage;
+    private Uri selectedImageUri;
 
     private ActivityAddNewCocktailBinding binding;
 
@@ -96,12 +98,13 @@ public class AddNewCocktail extends AppCompatActivity {
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GALLERY_CODE){
-            Uri file = data.getData();
+            selectedImageUri = data.getData();
+/*            Uri file = data.getData();
             StorageReference storageReference = storage.getReference(); //Firebase의 Cloud Storage에 접근하기 위한 StorageReference 객체를 생성
             StorageReference riversReference = storageReference.child("phote/1.png"); //Cloud Storage의 "photo" 폴더 아래에 "1.png"라는 이름으로 파일을 저장하도록 설정
-            UploadTask uploadTask = riversReference.putFile(file);
+            UploadTask uploadTask = riversReference.putFile(file);*/
 
-            addnewpicture.setVisibility(View.INVISIBLE); // 이미지를 업로드하면 기존 이미지를 보이지 않게 한다
+            /*addnewpicture.setVisibility(View.INVISIBLE); // 이미지를 업로드하면 기존 이미지를 보이지 않게 한다*/
 
             try{
                 InputStream in = getContentResolver().openInputStream(data.getData());
@@ -112,7 +115,7 @@ public class AddNewCocktail extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            uploadTask.addOnFailureListener(new OnFailureListener() {
+/*            uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(AddNewCocktail.this, "사진이 정상적으로 업로드 되지 않았습니다.", Toast.LENGTH_SHORT).show();
@@ -122,7 +125,7 @@ public class AddNewCocktail extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(AddNewCocktail.this, "사진이 정상적으로 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 
@@ -150,11 +153,35 @@ public class AddNewCocktail extends AppCompatActivity {
                         data.setCocktailNum(1);
                     }
 
-                    db.collection("cocktails")
-                            .document(String.valueOf(data.getCocktailNum()))
-                            .set(data)
-                            .addOnSuccessListener(aVoid -> binding.textResult.setText("success!"))
-                            .addOnFailureListener(e -> binding.textResult.setText("fail!"));
+                    // 이미지를 스토리지에 업로드
+                    StorageReference storageReference = storage.getReference();
+                    StorageReference riversReference = storageReference.child("photos/" + data.getCocktailNum() + ".png");
+                    UploadTask uploadTask = riversReference.putFile(selectedImageUri);
+                    uploadTask.continueWithTask(task1 -> {
+                        if (!task1.isSuccessful()) {
+                            throw task1.getException();
+                        }
+                        // Continue with the task to get the download URL
+                        return riversReference.getDownloadUrl();
+                    }).addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            Uri downloadUri = task1.getResult();
+                            // 다운로드 URL을 데이터에 추가
+                            data.setImageUrl(downloadUri.toString());
+
+                            db.collection("cocktails")
+                                    .document(String.valueOf(data.getCocktailNum()))
+                                    .set(data)
+                                    .addOnSuccessListener(aVoid -> binding.textResult.setText("success!"))
+                                    .addOnFailureListener(e -> {
+                                        binding.textResult.setText("fail!");
+                                        Log.e("Firebase", "Error adding document", e); // Android Log 클래스를 사용하여 오류 메시지를 로그에 출력
+                                    });
+                        } else {
+                            // Handle failures
+                            // ...
+                        }
+                    });
                 });
     }
 
