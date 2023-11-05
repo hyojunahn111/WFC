@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        tools:context=".AddNewCocktail"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+            <ImageView
+                android:id="@+id/addimv_md"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:visibility="visible"
+                android:scaleType="centerInside"
+                />
+        </FrameLayout>
+
+
+        <EditText
+            android:id="@+id/editTextCocktailName_md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="칵테일 이름"
+            android:layout_weight="1" />
+
+
+
+
+        <EditText
+            android:id="@+id/editTextCockSimpleExplan_md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="간단한 각테일 설명"
+            />
+
+        <EditText
+            android:id="@+id/editTextTechniques_md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="기법"
+            />
+
+        <EditText
+            android:id="@+id/editTextGlassName_md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="칵테일 잔 이름"
+            />
+
+        <EditText
+            android:id="@+id/editTextGarnish_md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="가니쉬"
+            />
+
+        <EditText
+            android:id="@+id/editTextRecipe_md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="칵테일 레시피"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+</ScrollView>
