@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -133,6 +137,8 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
     private List<FirebaseData> originalCocktails;
     private List<FirebaseData> filteredCocktails;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     public CocktailAdapter(List<FirebaseData> cocktails) {
         this.originalCocktails = cocktails;
         this.filteredCocktails = new ArrayList<>(cocktails);
@@ -158,6 +164,82 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
                 .placeholder(R.drawable.default_img)  // 이미지 로딩 중에 보여줄 이미지
                 .error(R.drawable.default_img)  // 이미지 로딩 실패 시 보여줄 이미지
                 .into(holder.imageViewCocktail);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("칵테일 정보 수정");
+
+                LayoutInflater inflater = LayoutInflater.from(v.getContext());
+                View view = inflater.inflate(R.layout.modify_cocktail, null);
+
+                ImageView addimv = view.findViewById(R.id.addimv_md);
+                EditText editTextCocktailName = view.findViewById(R.id.editTextCocktailName_md);
+                EditText editTextCocktailExplan = view.findViewById(R.id.editTextCockSimpleExplan_md);
+                EditText editTextCocktailTechniques = view.findViewById(R.id.editTextTechniques_md);
+                EditText editTextGlassName = view.findViewById(R.id.editTextGlassName_md);
+                EditText editTextGarnish = view.findViewById(R.id.editTextGarnish_md);
+                EditText editTextRecipe = view.findViewById(R.id.editTextRecipe_md);
+
+                Glide.with(view.getContext())
+                        .load(cocktail.getImageUrl())
+                        .placeholder(R.drawable.default_img)
+                        .error(R.drawable.default_img)
+                        .into(addimv);
+                editTextCocktailName.setText(cocktail.getCocktailName());
+                editTextCocktailExplan.setText(cocktail.getCockSimpleExplan());
+                editTextCocktailTechniques.setText(cocktail.getTechniques());
+                editTextGlassName.setText(cocktail.getGlassName());
+                editTextGarnish.setText(cocktail.getGarnish());
+                editTextRecipe.setText(cocktail.getRecipe());
+
+                builder.setView(view);
+
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 사용자가 확인 버튼을 누르면 정보를 수정하고 RecyclerView를 업데이트합니다.
+
+                        String cocktailName = editTextCocktailName.getText().toString();
+                        String cocktailExplan = editTextCocktailExplan.getText().toString();
+                        String cocktailTechniques = editTextCocktailTechniques.getText().toString();
+                        String glassName = editTextGlassName.getText().toString();
+                        String garnish = editTextGarnish.getText().toString();
+                        String recipe = editTextRecipe.getText().toString();
+
+                        FirebaseData updatedCocktail = new FirebaseData();
+                        updatedCocktail.setCocktailName(cocktailName);
+                        updatedCocktail.setCockSimpleExplan(cocktailExplan);
+                        updatedCocktail.setTechniques(cocktailTechniques);
+                        updatedCocktail.setGlassName(glassName);
+                        updatedCocktail.setGarnish(garnish);
+                        updatedCocktail.setRecipe(recipe);
+
+                        db.collection("cocktails").document(cocktail.getDocumentId())
+                                .set(updatedCocktail)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("Firestore", "DocumentSnapshot successfully updated!");
+                                        // RecyclerView 업데이트
+                                        notifyDataSetChanged();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("Firestore", "Error updating document", e);
+                                    }
+                                });
+
+                    }
+                });
+
+                builder.setNegativeButton("취소", null);
+
+                builder.show();
+            }
+        });
     }
 
     @Override
