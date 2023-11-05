@@ -172,7 +172,13 @@ public class AddNewCocktail extends AppCompatActivity {
                             db.collection("cocktails")
                                     .document(String.valueOf(data.getCocktailNum()))
                                     .set(data)
-                                    .addOnSuccessListener(aVoid -> binding.textResult.setText("success!"))
+                                    .addOnSuccessListener(aVoid -> {
+                                        binding.textResult.setText("success!");
+                                        // 데이터 저장이 성공하면 이전 액티비티(LogoutActivity)로 이동
+                                        Intent intent = new Intent(AddNewCocktail.this, LogoutActivity.class);
+                                        startActivity(intent);
+                                        finish(); // 현재 액티비티 종료
+                                    })
                                     .addOnFailureListener(e -> {
                                         binding.textResult.setText("fail!");
                                         Log.e("Firebase", "Error adding document", e); // Android Log 클래스를 사용하여 오류 메시지를 로그에 출력
