@@ -27,7 +27,7 @@ import java.io.InputStream;
 
 public class AddNewCocktail extends AppCompatActivity {
 
-    Button imageaddbutton;
+/*    Button imageaddbutton;*/
     final int GET_GALLERY_IMAGE = 200;
 
     private final int GALLERY_CODE = 10;
@@ -60,7 +60,7 @@ public class AddNewCocktail extends AppCompatActivity {
             }
         });
 
-        imageaddbutton = (Button) findViewById(R.id.imageaddbutton);
+        /*imageaddbutton = (Button) findViewById(R.id.imageaddbutton);
         imageaddbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +68,7 @@ public class AddNewCocktail extends AppCompatActivity {
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent,GET_GALLERY_IMAGE);
             }
-        });
+        });*/
 
         findViewById(R.id.addimv).setOnClickListener(onClickListener);
         addnewpicture=(ImageView)findViewById(R.id.addimv);
