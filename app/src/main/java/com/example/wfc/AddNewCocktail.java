@@ -101,6 +101,8 @@ public class AddNewCocktail extends AppCompatActivity {
             StorageReference riversReference = storageReference.child("phote/1.png"); //Cloud Storage의 "photo" 폴더 아래에 "1.png"라는 이름으로 파일을 저장하도록 설정
             UploadTask uploadTask = riversReference.putFile(file);
 
+            addnewpicture.setVisibility(View.INVISIBLE); // 이미지를 업로드하면 기존 이미지를 보이지 않게 한다
+
             try{
                 InputStream in = getContentResolver().openInputStream(data.getData());
                 Bitmap img = BitmapFactory.decodeStream(in);
