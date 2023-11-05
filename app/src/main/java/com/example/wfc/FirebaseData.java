@@ -10,6 +10,8 @@ public class FirebaseData {
     private int cocktailNum; //임의로 지정한 칵테일 번호
     private String imageUrl;
 
+    private String documentId;
+
     public FirebaseData() {}
 
     public FirebaseData(String cocktailName, String cockSimpleExplan, String techniques, String glassName, String garnish, 	String recipe, int cocktailNum) {
@@ -69,4 +71,14 @@ public class FirebaseData {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    // 문서 ID를 설정하는 메서드
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
 }
