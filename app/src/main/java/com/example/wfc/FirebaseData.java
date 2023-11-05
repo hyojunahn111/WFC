@@ -8,6 +8,7 @@ public class FirebaseData {
     private String garnish; // 칵테일 위에 올라가는 장식(안주)
     private String recipe; //레시피
     private int cocktailNum; //임의로 지정한 칵테일 번호
+    private String imageUrl;
 
     public FirebaseData() {}
 
@@ -60,4 +61,12 @@ public class FirebaseData {
     public String getGarnish() {return garnish;}
 
     public String getRecipe() {return recipe;}
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
