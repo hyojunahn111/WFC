@@ -18,19 +18,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <Button
+            <!--<Button
                 android:id="@+id/imageaddbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/plusbt_im"
                 android:hint="그림을\n추가하려면\n클릭해주세요."
-                android:visibility="visible"/>
+                android:visibility="visible"/>-->
 
             <ImageView
                 android:id="@+id/addimv"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:visibility="invisible" />
+                android:visibility="visible"
+                android:background="@drawable/plusbt_im"/>
         </FrameLayout>
 
 
