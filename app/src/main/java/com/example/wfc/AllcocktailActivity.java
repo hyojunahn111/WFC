@@ -126,7 +126,7 @@ public class AllcocktailActivity extends AppCompatActivity {
 
 }
 
-class   CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder> {
+class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder> {
 
     private List<FirebaseData> originalCocktails;
     private List<FirebaseData> filteredCocktails;
