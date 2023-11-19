@@ -29,50 +29,56 @@
         </FrameLayout>
 
 
-        <EditText
-            android:id="@+id/editTextCocktailName_md"
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:id="@+id/TextCocktailName_md"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="칵테일 이름"
-            android:layout_weight="1" />
+            android:textSize="30dp"/>
 
 
 
 
-        <EditText
-            android:id="@+id/editTextCockSimpleExplan_md"
+        <TextView
+            android:id="@+id/TextCockSimpleExplan_md"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="간단한 각테일 설명"
+            android:textSize="30dp"
             />
 
-        <EditText
-            android:id="@+id/editTextTechniques_md"
+        <TextView
+            android:id="@+id/TextTechniques_md"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="기법"
+            android:textSize="30dp"
             />
 
-        <EditText
-            android:id="@+id/editTextGlassName_md"
+        <TextView
+            android:id="@+id/TextGlassName_md"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="칵테일 잔 이름"
+            android:textSize="30dp"
             />
 
-        <EditText
-            android:id="@+id/editTextGarnish_md"
+        <TextView
+            android:id="@+id/TextGarnish_md"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="가니쉬"
+            android:textSize="30dp"
             />
 
-        <EditText
-            android:id="@+id/editTextRecipe_md"
+        <TextView
+            android:id="@+id/TextRecipe_md"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="칵테일 레시피"
             android:layout_gravity="center"
+            android:textSize="30dp"
             />
 
     </LinearLayout>
