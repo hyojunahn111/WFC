@@ -169,34 +169,35 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("칵테일 정보 수정");
+                builder.setTitle("칵테일 상세정보");
 
                 LayoutInflater inflater = LayoutInflater.from(v.getContext());
                 View view = inflater.inflate(R.layout.modify_cocktail, null);
 
                 ImageView addimv = view.findViewById(R.id.addimv_md);
-                EditText editTextCocktailName = view.findViewById(R.id.editTextCocktailName_md);
-                EditText editTextCocktailExplan = view.findViewById(R.id.editTextCockSimpleExplan_md);
-                EditText editTextCocktailTechniques = view.findViewById(R.id.editTextTechniques_md);
-                EditText editTextGlassName = view.findViewById(R.id.editTextGlassName_md);
-                EditText editTextGarnish = view.findViewById(R.id.editTextGarnish_md);
-                EditText editTextRecipe = view.findViewById(R.id.editTextRecipe_md);
+                TextView TextCocktailName = view.findViewById(R.id.TextCocktailName_md);
+                TextView TextCocktailExplan = view.findViewById(R.id.TextCockSimpleExplan_md);
+                TextView TextCocktailTechniques = view.findViewById(R.id.TextTechniques_md);
+                TextView TextGlassName = view.findViewById(R.id.TextGlassName_md);
+                TextView TextGarnish = view.findViewById(R.id.TextGarnish_md);
+                TextView TextRecipe = view.findViewById(R.id.TextRecipe_md);
 
                 Glide.with(view.getContext())
                         .load(cocktail.getImageUrl())
                         .placeholder(R.drawable.default_img)
                         .error(R.drawable.default_img)
                         .into(addimv);
-                editTextCocktailName.setText(cocktail.getCocktailName());
-                editTextCocktailExplan.setText(cocktail.getCockSimpleExplan());
-                editTextCocktailTechniques.setText(cocktail.getTechniques());
-                editTextGlassName.setText(cocktail.getGlassName());
-                editTextGarnish.setText(cocktail.getGarnish());
-                editTextRecipe.setText(cocktail.getRecipe());
+                TextCocktailName.setText(cocktail.getCocktailName());
+                TextCocktailExplan.setText(cocktail.getCockSimpleExplan());
+                TextCocktailTechniques.setText(cocktail.getTechniques());
+                TextGlassName.setText(cocktail.getGlassName());
+                TextGarnish.setText(cocktail.getGarnish());
+                TextRecipe.setText(cocktail.getRecipe());
 
                 builder.setView(view);
 
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("확인", null);
+/*
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 사용자가 확인 버튼을 누르면 정보를 수정하고 RecyclerView를 업데이트합니다.
@@ -232,10 +233,13 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
                                     }
                                 });
 
+
+
                     }
                 });
+*/
 
-                builder.setNegativeButton("취소", null);
+                /*builder.setNegativeButton("취소", null);*/
 
                 builder.show();
             }
