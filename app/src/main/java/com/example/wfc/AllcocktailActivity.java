@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -51,6 +52,7 @@ public class AllcocktailActivity extends AppCompatActivity {
                 List<FirebaseData> cocktails = new ArrayList<>();
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     FirebaseData data = document.toObject(FirebaseData.class);
+                    data.setDocumentId(document.getId());
                     cocktails.add(data);
                 }
 
@@ -204,49 +206,23 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
                 builder.setView(view);
 
                 builder.setPositiveButton("확인", null);
-/*
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 사용자가 확인 버튼을 누르면 정보를 수정하고 RecyclerView를 업데이트합니다.
+                builder.setNeutralButton("수정", new DialogInterface.OnClickListener(){
+                   @Override
+                   public void  onClick(DialogInterface dialog, int which){
+                       Intent intent = new Intent(v.getContext(),Real_modify_cocktail.class);
 
-                        String cocktailName = editTextCocktailName.getText().toString();
-                        String cocktailExplan = editTextCocktailExplan.getText().toString();
-                        String cocktailTechniques = editTextCocktailTechniques.getText().toString();
-                        String glassName = editTextGlassName.getText().toString();
-                        String garnish = editTextGarnish.getText().toString();
-                        String recipe = editTextRecipe.getText().toString();
-
-                        FirebaseData updatedCocktail = new FirebaseData();
-                        updatedCocktail.setCocktailName(cocktailName);
-                        updatedCocktail.setCockSimpleExplan(cocktailExplan);
-                        updatedCocktail.setTechniques(cocktailTechniques);
-                        updatedCocktail.setGlassName(glassName);
-                        updatedCocktail.setGarnish(garnish);
-                        updatedCocktail.setRecipe(recipe);
-
-                        db.collection("cocktails").document(cocktail.getDocumentId())
-                                .set(updatedCocktail)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("Firestore", "DocumentSnapshot successfully updated!");
-                                        // RecyclerView 업데이트
-                                        notifyDataSetChanged();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("Firestore", "Error updating document", e);
-                                    }
-                                });
+                       intent.putExtra("DocumentId", cocktail.getDocumentId());
+                       intent.putExtra("CocktailName", cocktail.getCocktailName());
+                       intent.putExtra("CockSimpleExplan", cocktail.getCockSimpleExplan());
+                       intent.putExtra("Techniques", cocktail.getTechniques());
+                       intent.putExtra("GlassName", cocktail.getGlassName());
+                       intent.putExtra("Garnish", cocktail.getGarnish());
+                       intent.putExtra("Recipe", cocktail.getRecipe());
 
 
-
-                    }
+                       v.getContext().startActivity(intent);
+                   }
                 });
-*/
-
-                /*builder.setNegativeButton("취소", null);*/
 
                 builder.show();
             }
@@ -286,58 +262,3 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         notifyDataSetChanged();  // Notify the adapter that data set has changed which triggers UI update.
     }
 }
-
-
-/*
-class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder> {
-
-    private List<FirebaseData> cocktails;
-
-    public CocktailAdapter(List<FirebaseData> cocktails) {
-        this.cocktails = cocktails;
-    }
-
-    @NonNull
-    @Override
-    public CocktailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cocktail, parent, false);
-        return new CocktailViewHolder(view);
-
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull CocktailViewHolder holder, int position) {
-
-        FirebaseData cocktail = cocktails.get(position);
-
-        holder.textViewCocktailNum.setText(String.valueOf(cocktail.getCocktailNum()));
-        holder.textViewCocktailName.setText(cocktail.getCocktailName());
-        holder.textViewCockSimpleExplan.setText(cocktail.getCockSimpleExplan());
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return cocktails.size();
-    }
-
-    static class CocktailViewHolder extends RecyclerView.ViewHolder {
-
-        TextView textViewCocktailNum;
-        TextView textViewCocktailName;
-        TextView textViewCockSimpleExplan;
-
-        public CocktailViewHolder(View itemView) {
-            super(itemView);
-            textViewCocktailNum = itemView.findViewById(R.id.textViewCocktailNum);
-            textViewCocktailName = itemView.findViewById(R.id.textViewCocktailName);
-            textViewCockSimpleExplan = itemView.findViewById(R.id.textViewCockSimpleExplan);
-        }
-    }
-    public void filterList(List<FirebaseData> filteredList) {
-        cocktails = filteredList;
-        notifyDataSetChanged();
-    }
-
-}*/
