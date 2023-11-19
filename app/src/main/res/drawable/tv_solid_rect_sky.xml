@@ -3,6 +3,7 @@
     <item>
         <shape>
             <solid android:color="#83E6EB"/>
+            <stroke android:width="2dp" android:color="#769C9E" />
         </shape>
     </item>
 </selector>
