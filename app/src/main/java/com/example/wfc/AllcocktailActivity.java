@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -176,11 +177,17 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
 
                 ImageView addimv = view.findViewById(R.id.addimv_md);
                 TextView TextCocktailName = view.findViewById(R.id.TextCocktailName_md);
+                TextCocktailName.setTextColor(Color.WHITE);
                 TextView TextCocktailExplan = view.findViewById(R.id.TextCockSimpleExplan_md);
+                TextCocktailExplan.setTextColor(Color.WHITE);
                 TextView TextCocktailTechniques = view.findViewById(R.id.TextTechniques_md);
+                TextCocktailTechniques.setTextColor(Color.WHITE);
                 TextView TextGlassName = view.findViewById(R.id.TextGlassName_md);
+                TextGlassName.setTextColor(Color.WHITE);
                 TextView TextGarnish = view.findViewById(R.id.TextGarnish_md);
+                TextGarnish.setTextColor(Color.WHITE);
                 TextView TextRecipe = view.findViewById(R.id.TextRecipe_md);
+                TextRecipe.setTextColor(Color.WHITE);
 
                 Glide.with(view.getContext())
                         .load(cocktail.getImageUrl())
