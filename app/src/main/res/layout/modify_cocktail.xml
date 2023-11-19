@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#D3E4E4">
 
     <LinearLayout
         tools:context=".AddNewCocktail"
@@ -30,12 +31,16 @@
 
 
         <TextView
-            android:layout_marginLeft="15dp"
             android:id="@+id/TextCocktailName_md"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="칵테일 이름"
-            android:textSize="30dp"/>
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/tv_solid_rect_sky"
+            android:layout_marginBottom="5dp"
+            />
 
 
 
@@ -46,6 +51,11 @@
             android:layout_height="wrap_content"
             android:hint="간단한 각테일 설명"
             android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/tv_solid_rect_sky"
+            android:layout_marginBottom="5dp"
+
             />
 
         <TextView
@@ -54,6 +64,11 @@
             android:layout_height="wrap_content"
             android:hint="기법"
             android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/tv_solid_rect_sky"
+            android:layout_marginBottom="5dp"
+
             />
 
         <TextView
@@ -62,6 +77,10 @@
             android:layout_height="wrap_content"
             android:hint="칵테일 잔 이름"
             android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/tv_solid_rect_sky"
+            android:layout_marginBottom="5dp"
             />
 
         <TextView
@@ -70,6 +89,11 @@
             android:layout_height="wrap_content"
             android:hint="가니쉬"
             android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/tv_solid_rect_sky"
+            android:layout_marginBottom="5dp"
+
             />
 
         <TextView
@@ -79,6 +103,11 @@
             android:hint="칵테일 레시피"
             android:layout_gravity="center"
             android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/tv_solid_rect_sky"
+            android:layout_marginBottom="5dp"
+
             />
 
     </LinearLayout>
