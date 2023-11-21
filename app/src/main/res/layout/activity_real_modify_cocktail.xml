@@ -7,6 +7,14 @@
     tools:context=".Real_modify_cocktail"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/modifyaddbt"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/plusbt_im"
+        />
+
     <EditText
         android:id="@+id/rmd_cocktailName"
         android:layout_width="match_parent"
