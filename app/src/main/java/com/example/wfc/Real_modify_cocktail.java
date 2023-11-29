@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,17 +21,25 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.InputStream;
 
 public class Real_modify_cocktail extends AppCompatActivity {
 
     private EditText editTextCocktailName, editTextCockSimpleExplan, editTextTechniques, editTextGlassName, editTextGarnish, editTextRecipe;
     private Button buttonModify;
-/*    private static final int REQUEST_CODE_IMAGE_PICK = 1;
+    //private static final int REQUEST_CODE_IMAGE_PICK = 1;
     private ImageView imageViewCocktail;
-    private String documentId;*/
+    private String documentId;
+    private final int GALLERY_CODE = 10;
+    private Uri selectedImageUri;
+    private FirebaseStorage storage;
+    private int cocktailNum = 0;
+    private String imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +53,8 @@ public class Real_modify_cocktail extends AppCompatActivity {
         editTextGarnish = findViewById(R.id.rmd_garnish);
         editTextRecipe = findViewById(R.id.rmd_recipe);
 
-        String documentId = getIntent().getStringExtra("DocumentId");
-        if(documentId == null){
+        documentId = getIntent().getStringExtra("DocumentId");
+        if (documentId == null) {
             Log.d("Firestore", "DocumentId is null!");
             return;
         }
@@ -82,6 +93,7 @@ public class Real_modify_cocktail extends AppCompatActivity {
                 updatedCocktail.setGlassName(newGlassName);
                 updatedCocktail.setGarnish(newGarnish);
                 updatedCocktail.setRecipe(newRecipe);
+                updatedCocktail.setImageUrl(imageUrl);
 
                 db.collection("cocktails").document(documentId)
                         .set(updatedCocktail)
@@ -106,66 +118,79 @@ public class Real_modify_cocktail extends AppCompatActivity {
             }
         });
 
-       /* imageViewCocktail = findViewById(R.id.modifyaddbt);
+        //imageViewCocktail = findViewById(R.id.modifyaddbt);
+        findViewById(R.id.modifyaddbt).setOnClickListener(onClickListener);
+        imageViewCocktail = (ImageView)findViewById(R.id.modifyaddbt);
+        storage=FirebaseStorage.getInstance();
 
-        imageViewCocktail.setOnClickListener(new View.OnClickListener() {
+
+        /*imageViewCocktail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent, REQUEST_CODE_IMAGE_PICK);
             }
-
-
         });*/
 
-
     }
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.modifyaddbt:
+                    loadAlbum();
+                    break;
+            }
+        }
+    };
+
+    private void loadAlbum() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, GALLERY_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, final Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_IMAGE_PICK && resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            imageViewCocktail.setImageURI(selectedImageUri);  // 이미지뷰에 선택한 이미지를 보여줍니다.
+        if(requestCode == GALLERY_CODE){
+            selectedImageUri = data.getData();
+            try{
+                InputStream in = getContentResolver().openInputStream(data.getData());
+                Bitmap img = BitmapFactory.decodeStream(in);
+                in.close();
+                imageViewCocktail.setImageBitmap(img);
 
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReference();
-            StorageReference cocktailImagesRef = storageRef.child("cocktail_images/" + documentId);
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference();
+                StorageReference cocktailImagesRef = storageRef.child("cocktail_images/" + cocktailNum);
 
-            UploadTask uploadTask = cocktailImagesRef.putFile(selectedImageUri);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            cocktailImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    // 업로드한 이미지의 URL을 Firestore에 저장합니다.
-                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                    db.collection("cocktails").document(documentId)
-                                            .update("imageUrl", uri.toString())
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.d("Firestore", "Image URL successfully updated!");
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.w("Firestore", "Error updating image URL", e);
-                                                }
-                                            });
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("FirebaseStorage", "Error uploading image", e);
-                        }
-                    });
+                UploadTask uploadTask = cocktailImagesRef.putFile(selectedImageUri);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                cocktailImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        imageUrl = uri.toString(); // 이미지 URL을 저장합니다.
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("FirebaseStorage", "Error uploading image", e);
+                            }
+                        });
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
-*/
+
 }
+
+
