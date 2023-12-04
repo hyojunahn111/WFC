@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -32,8 +33,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -188,11 +192,14 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
     private List<FirebaseData> filteredCocktails;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public CocktailAdapter(List<FirebaseData> cocktails) {
         this.originalCocktails = cocktails;
         this.filteredCocktails = new ArrayList<>(cocktails);
+        this.auth = auth;
     }
+
 
     @NonNull
     @Override
@@ -201,6 +208,7 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         return new CocktailViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull CocktailViewHolder holder, int position) {
         FirebaseData cocktail = filteredCocktails.get(position);
@@ -208,6 +216,14 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         //holder.textViewCocktailNum.setText(String.valueOf(cocktail.getCocktailNum()));
         holder.textViewCocktailName.setText(cocktail.getCocktailName());
         holder.textViewCockSimpleExplan.setText(cocktail.getCockSimpleExplan());
+        holder.buttonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLikeClicked(db.collection("cocktails").document(cocktail.getDocumentId()));
+            }
+        });
+
+
 
         Glide.with(holder.itemView.getContext())
                 .load(cocktail.getImageUrl())
@@ -276,12 +292,36 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         });
     }
 
+    private void onLikeClicked(DocumentReference cocktailRef) {
+        FirebaseFirestore.getInstance().runTransaction(new Transaction.Function<Void>() {
+            @NonNull
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                FirebaseData cocktail = transaction.get(cocktailRef).toObject(FirebaseData.class);
+
+                if (cocktail.getLikes().containsKey(auth.getCurrentUser().getUid())) {
+                    cocktail.setLikeCount(cocktail.getLikeCount() - 1);
+                    cocktail.getLikes().remove(auth.getCurrentUser().getUid());
+                } else {
+                    cocktail.setLikeCount(cocktail.getLikeCount() + 1);
+                    cocktail.getLikes().put(auth.getCurrentUser().getUid(), true);
+                }
+
+                transaction.set(cocktailRef, cocktail);
+                return null;
+            }
+        });
+    }
+
+
     @Override
     public int getItemCount() {
         return filteredCocktails.size();
     }
 
     static class CocktailViewHolder extends RecyclerView.ViewHolder {
+
+        ImageButton buttonLike;
 
         //TextView textViewCocktailNum;
         TextView textViewCocktailName;
@@ -293,9 +333,12 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
             //textViewCocktailNum = itemView.findViewById(R.id.textViewCocktailNum);
             textViewCocktailName = itemView.findViewById(R.id.textViewCocktailName);
             textViewCockSimpleExplan = itemView.findViewById(R.id.textViewCockSimpleExplan);
+            buttonLike = itemView.findViewById(R.id.buttonLike);
             imageViewCocktail = itemView.findViewById(R.id.imageViewCocktail);  // 초기화
         }
     }
+
+
 
     // Update the adapter to filter the list
 
