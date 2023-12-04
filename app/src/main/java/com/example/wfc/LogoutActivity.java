@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -100,6 +102,24 @@ public class LogoutActivity extends AppCompatActivity {
             } //칵테일 전체 목록을 보는 버튼 -> 칵테일 전체 목록으로 이동
         });
 
+
+        WebView webView = findViewById(R.id.webView1);
+        String video = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/qYlzca11Tbc?si=Ag-quM45oygS79z5\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+        webView.loadData(video, "text/html", "utf-8");
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+
+        WebView webView2 = findViewById(R.id.webView2);
+        String video2 = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/FtemVq2qyco?si=IztkxZ3DIF8YCk-l\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+        webView2.loadData(video2, "text/html", "utf-8");
+        webView2.getSettings().setJavaScriptEnabled(true);
+        webView2.setWebViewClient(new WebViewClient());
+
+        WebView webView3 = findViewById(R.id.webView3);
+        String video3 = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/W8BKuiwiy20?si=7JesEvcms93J6rtF\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+        webView3.loadData(video3, "text/html", "utf-8");
+        webView3.getSettings().setJavaScriptEnabled(true);
+        webView3.setWebViewClient(new WebViewClient());
 
     }
 }
