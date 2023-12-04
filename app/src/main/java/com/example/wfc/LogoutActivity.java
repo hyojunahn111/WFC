@@ -3,8 +3,11 @@ package com.example.wfc;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +29,30 @@ public class LogoutActivity extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.logoutbutton);
 
         allcockbt1 = (Button) findViewById(R.id.allcockbt);
+
+        findViewById(R.id.allmenubt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                final PopupMenu popupMenu = new PopupMenu(getApplicationContext(),view);
+                getMenuInflater().inflate(R.menu.popup,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if (menuItem.getItemId() == R.id.action_menu1){
+                            Toast.makeText(LogoutActivity.this, "메뉴 1 클릭", Toast.LENGTH_SHORT).show();
+                        }else if (menuItem.getItemId() == R.id.action_menu2){
+                            Toast.makeText(LogoutActivity.this, "메뉴 2 클릭", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(LogoutActivity.this, "메뉴 3 클릭", Toast.LENGTH_SHORT).show();
+                        }
+
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
 
         logoutButton.setOnClickListener(v -> {
             Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
