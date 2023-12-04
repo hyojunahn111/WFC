@@ -158,7 +158,7 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
     public void onBindViewHolder(@NonNull CocktailViewHolder holder, int position) {
         FirebaseData cocktail = filteredCocktails.get(position);
 
-        holder.textViewCocktailNum.setText(String.valueOf(cocktail.getCocktailNum()));
+        //holder.textViewCocktailNum.setText(String.valueOf(cocktail.getCocktailNum()));
         holder.textViewCocktailName.setText(cocktail.getCocktailName());
         holder.textViewCockSimpleExplan.setText(cocktail.getCockSimpleExplan());
 
@@ -236,14 +236,14 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
 
     static class CocktailViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewCocktailNum;
+        //TextView textViewCocktailNum;
         TextView textViewCocktailName;
         TextView textViewCockSimpleExplan;
         ImageView imageViewCocktail;
 
         public CocktailViewHolder(View itemView) {
             super(itemView);
-            textViewCocktailNum = itemView.findViewById(R.id.textViewCocktailNum);
+            //textViewCocktailNum = itemView.findViewById(R.id.textViewCocktailNum);
             textViewCocktailName = itemView.findViewById(R.id.textViewCocktailName);
             textViewCockSimpleExplan = itemView.findViewById(R.id.textViewCockSimpleExplan);
             imageViewCocktail = itemView.findViewById(R.id.imageViewCocktail);  // 초기화
