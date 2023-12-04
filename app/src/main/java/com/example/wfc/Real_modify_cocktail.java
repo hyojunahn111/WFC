@@ -38,7 +38,7 @@ public class Real_modify_cocktail extends AppCompatActivity {
     private final int GALLERY_CODE = 10;
     private Uri selectedImageUri;
     private FirebaseStorage storage;
-    private int cocktailNum = 0;
+    private int cocktailNum;
     private String imageUrl;
 
     @Override
@@ -165,7 +165,7 @@ public class Real_modify_cocktail extends AppCompatActivity {
 
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference();
-                StorageReference cocktailImagesRef = storageRef.child("cocktail_images/" + cocktailNum);
+                StorageReference cocktailImagesRef = storageRef.child("cocktail_images/" + documentId);
 
                 UploadTask uploadTask = cocktailImagesRef.putFile(selectedImageUri);
                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
