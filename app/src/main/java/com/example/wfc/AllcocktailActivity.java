@@ -17,17 +17,21 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -39,11 +43,14 @@ public class AllcocktailActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private List<FirebaseData> cocktails = new ArrayList<>();
     private CocktailAdapter adapter;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allcocktail);
+
+        auth = FirebaseAuth.getInstance();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewCocktails);
 
@@ -89,6 +96,46 @@ public class AllcocktailActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        findViewById(R.id.allmenubt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                final PopupMenu popupMenu = new PopupMenu(getApplicationContext(),view);
+                getMenuInflater().inflate(R.menu.popup,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if (menuItem.getItemId() == R.id.action_menu1){
+
+                            Intent intent = new Intent(AllcocktailActivity.this, LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+
+                            auth.signOut();
+
+                            Toast.makeText(AllcocktailActivity.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                        }else if (menuItem.getItemId() == R.id.action_menu2){
+                            Toast.makeText(AllcocktailActivity.this, "기능없음", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(AllcocktailActivity.this, "기능없음", Toast.LENGTH_SHORT).show();
+                        }
+
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
+        ImageView goMainImage = findViewById(R.id.gomainim);
+        goMainImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AllcocktailActivity.this, LogoutActivity.class); // CurrentActivity는 현재 액티비티의 이름으로 대체해주세요.
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void hideKeyboard(View view) {
