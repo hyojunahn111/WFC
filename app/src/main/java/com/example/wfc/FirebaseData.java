@@ -1,5 +1,8 @@
 package com.example.wfc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FirebaseData {
     private String cocktailName; // 칵테일 이름
     private String cockSimpleExplan; //칵테일에 대한 간단한 소개
@@ -11,6 +14,9 @@ public class FirebaseData {
     private String imageUrl;
 
     private String documentId;
+
+    private int likeCount;
+    private Map<String, Boolean> likes = new HashMap<>();
 
     public FirebaseData() {}
 
@@ -79,6 +85,23 @@ public class FirebaseData {
     // 문서 ID를 설정하는 메서드
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    // likes의 getter와 setter
+    public Map<String, Boolean> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Map<String, Boolean> likes) {
+        this.likes = likes;
     }
 
 }
