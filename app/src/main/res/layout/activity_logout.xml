@@ -7,19 +7,23 @@
     android:gravity="center"
     android:layout_weight="1">
 
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1.7">
+        android:layout_weight="0.8">
 
-        <Button
-            android:id="@+id/allcockbt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="모든 칵테일 보기"
+        <ImageView
+            android:id="@+id/gomainim"
+            android:background="@drawable/gomain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.15"
             />
+
 
         <Button
             android:id="@+id/allmenubt"
@@ -31,12 +35,19 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/allcockbt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="모든 칵테일 보기"
+        />
+
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.15"
         android:orientation="horizontal">
 
         <Button
@@ -56,7 +67,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -69,7 +80,7 @@
             android:layout_gravity="bottom"
             android:text="@string/logout_button_text"
             />
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 
