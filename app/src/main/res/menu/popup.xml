@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_menu1"
-        android:title="메뉴 1" />
+        android:title="로그아웃" />
     <item
         android:id="@+id/action_menu2"
-        android:title="메뉴 2" />
+        android:title="기능없음" />
     <item
         android:id="@+id/action_menu3"
-        android:title="메뉴 3" />
+        android:title="기능없음" />
 </menu>
