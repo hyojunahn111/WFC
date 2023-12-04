@@ -31,7 +31,7 @@ public class LogoutActivity extends AppCompatActivity {
 
         allcockbt1 = (Button) findViewById(R.id.allcockbt);
 
-        findViewById(R.id.allmenubt).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.allmenubt2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 final PopupMenu popupMenu = new PopupMenu(getApplicationContext(),view);
@@ -61,7 +61,7 @@ public class LogoutActivity extends AppCompatActivity {
             }
         });
 
-        ImageView goMainImage = findViewById(R.id.gomainim);
+        ImageView goMainImage = findViewById(R.id.gomainim2);
         goMainImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
