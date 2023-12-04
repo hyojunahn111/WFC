@@ -153,42 +153,65 @@ public class AddNewCocktail extends AppCompatActivity {
                         data.setCocktailNum(1);
                     }
 
-                    // 이미지를 스토리지에 업로드
-                    StorageReference storageReference = storage.getReference();
-                    StorageReference riversReference = storageReference.child("photos/" + data.getCocktailNum() + ".png");
-                    UploadTask uploadTask = riversReference.putFile(selectedImageUri);
-                    uploadTask.continueWithTask(task1 -> {
-                        if (!task1.isSuccessful()) {
-                            throw task1.getException();
-                        }
-                        // Continue with the task to get the download URL
-                        return riversReference.getDownloadUrl();
-                    }).addOnCompleteListener(task1 -> {
-                        if (task1.isSuccessful()) {
-                            Uri downloadUri = task1.getResult();
-                            // 다운로드 URL을 데이터에 추가
-                            data.setImageUrl(downloadUri.toString());
+                    if(selectedImageUri != null) {
+                        // 이미지를 스토리지에 업로드
+                        StorageReference storageReference = storage.getReference();
+                        StorageReference riversReference = storageReference.child("photos/" + data.getCocktailNum() + ".png");
+                        UploadTask uploadTask = riversReference.putFile(selectedImageUri);
+                        uploadTask.continueWithTask(task1 -> {
+                            if (!task1.isSuccessful()) {
+                                throw task1.getException();
+                            }
+                            // Continue with the task to get the download URL
+                            return riversReference.getDownloadUrl();
+                        }).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Uri downloadUri = task1.getResult();
+                                // 다운로드 URL을 데이터에 추가
+                                data.setImageUrl(downloadUri.toString());
 
-                            db.collection("cocktails")
-                                    .document(String.valueOf(data.getCocktailNum()))
-                                    .set(data)
-                                    .addOnSuccessListener(aVoid -> {
-                                        binding.textResult.setText("success!");
-                                        // 데이터 저장이 성공하면 이전 액티비티(LogoutActivity)로 이동
-                                        Intent intent = new Intent(AddNewCocktail.this, LogoutActivity.class);
-                                        startActivity(intent);
-                                        finish(); // 현재 액티비티 종료
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        binding.textResult.setText("fail!");
-                                        Log.e("Firebase", "Error adding document", e); // Android Log 클래스를 사용하여 오류 메시지를 로그에 출력
-                                    });
-                        } else {
-                            // Handle failures
-                            // ...
-                        }
-                    });
+                                db.collection("cocktails")
+                                        .document(String.valueOf(data.getCocktailNum()))
+                                        .set(data)
+                                        .addOnSuccessListener(aVoid -> {
+                                            binding.textResult.setText("success!");
+                                            // 데이터 저장이 성공하면 이전 액티비티(LogoutActivity)로 이동
+                                            Intent intent = new Intent(AddNewCocktail.this, LogoutActivity.class);
+                                            startActivity(intent);
+                                            finish(); // 현재 액티비티 종료
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            binding.textResult.setText("fail!");
+                                            Log.e("Firebase", "Error adding document", e); // Android Log 클래스를 사용하여 오류 메시지를 로그에 출력
+                                        });
+                            } else {
+                                // Handle failures
+                                // ...
+                            }
+                        });
+                    }else{
+                        data.setImageUrl("gs://whats-your-favorite-cocktail.appspot.com/default_img.png");
+                        saveDataToFirestore(data, db);
+                    }
                 });
     }
+
+    private void saveDataToFirestore(FirebaseData data, FirebaseFirestore db) {
+        db.collection("cocktails")
+                .document(String.valueOf(data.getCocktailNum()))
+                .set(data)
+                .addOnSuccessListener(aVoid -> {
+                    binding.textResult.setText("success!");
+                    // 데이터 저장이 성공하면 이전 액티비티(LogoutActivity)로 이동
+                    Intent intent = new Intent(AddNewCocktail.this, LogoutActivity.class);
+                    startActivity(intent);
+                    finish(); // 현재 액티비티 종료
+                })
+                .addOnFailureListener(e -> {
+                    binding.textResult.setText("fail!");
+                    Log.e("Firebase", "Error adding document", e); // Android Log 클래스를 사용하여 오류 메시지를 로그에 출력
+                });
+    }
+
 
 }
