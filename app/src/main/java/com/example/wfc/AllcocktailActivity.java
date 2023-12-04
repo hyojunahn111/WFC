@@ -227,9 +227,14 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
             @Override
             public void onClick(View v) {
                 onLikeClicked(db.collection("cocktails").document(cocktail.getDocumentId()));
+                /*if (cocktail.getLikes().containsKey(auth.getCurrentUser().getUid())) {
+                    holder.buttonLike.setImageResource(R.drawable.sun);
+                } else {
+                    holder.buttonLike.setImageResource(R.drawable.heartgood_im);
+                }*/
             }
         });
-        
+
 
         Glide.with(holder.itemView.getContext())
                 .load(cocktail.getImageUrl())
