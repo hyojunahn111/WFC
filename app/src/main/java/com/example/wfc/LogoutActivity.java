@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ public class LogoutActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
 
-        Button logoutButton = findViewById(R.id.logoutbutton);
+        //Button logoutButton = findViewById(R.id.logoutbutton);
 
         allcockbt1 = (Button) findViewById(R.id.allcockbt);
 
@@ -39,11 +40,18 @@ public class LogoutActivity extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         if (menuItem.getItemId() == R.id.action_menu1){
-                            Toast.makeText(LogoutActivity.this, "메뉴 1 클릭", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+
+                            auth.signOut();
+
+                            Toast.makeText(LogoutActivity.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
                         }else if (menuItem.getItemId() == R.id.action_menu2){
-                            Toast.makeText(LogoutActivity.this, "메뉴 2 클릭", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogoutActivity.this, "기능없음", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(LogoutActivity.this, "메뉴 3 클릭", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogoutActivity.this, "기능없음", Toast.LENGTH_SHORT).show();
                         }
 
                         return false;
@@ -53,15 +61,24 @@ public class LogoutActivity extends AppCompatActivity {
             }
         });
 
+        ImageView goMainImage = findViewById(R.id.gomainim);
+        goMainImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LogoutActivity.this, LogoutActivity.class); // CurrentActivity는 현재 액티비티의 이름으로 대체해주세요.
+                startActivity(intent);
+            }
+        });
 
-        logoutButton.setOnClickListener(v -> {
+
+        /*logoutButton.setOnClickListener(v -> {
             Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
             auth.signOut();
 
-        });
+        });*/
 
         Button cocknewaddbt = findViewById(R.id.cocknewaddbt);
         cocknewaddbt.setOnClickListener(new View.OnClickListener() {
