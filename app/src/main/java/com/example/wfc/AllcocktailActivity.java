@@ -1,8 +1,10 @@
 package com.example.wfc;
 
+import static android.content.ContentValues.TAG;
 import static com.google.android.material.internal.ViewUtils.hideKeyboard;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,12 +36,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.Transaction;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
 public class AllcocktailActivity extends AppCompatActivity {
@@ -216,20 +222,22 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         //holder.textViewCocktailNum.setText(String.valueOf(cocktail.getCocktailNum()));
         holder.textViewCocktailName.setText(cocktail.getCocktailName());
         holder.textViewCockSimpleExplan.setText(cocktail.getCockSimpleExplan());
+        holder.textViewLikeCount.setText(String.valueOf(cocktail.getLikeCount()));
         holder.buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onLikeClicked(db.collection("cocktails").document(cocktail.getDocumentId()));
             }
         });
-
-
+        
 
         Glide.with(holder.itemView.getContext())
                 .load(cocktail.getImageUrl())
                 .placeholder(R.drawable.default_img)  // 이미지 로딩 중에 보여줄 이미지
                 .error(R.drawable.default_img)  // 이미지 로딩 실패 시 보여줄 이미지
                 .into(holder.imageViewCocktail);
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,6 +316,7 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
                 }
 
                 transaction.set(cocktailRef, cocktail);
+
                 return null;
             }
         });
@@ -328,13 +337,16 @@ class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewH
         TextView textViewCockSimpleExplan;
         ImageView imageViewCocktail;
 
+        TextView textViewLikeCount;  // 좋아요 수를 표시할 TextView 추가
+
         public CocktailViewHolder(View itemView) {
             super(itemView);
             //textViewCocktailNum = itemView.findViewById(R.id.textViewCocktailNum);
             textViewCocktailName = itemView.findViewById(R.id.textViewCocktailName);
             textViewCockSimpleExplan = itemView.findViewById(R.id.textViewCockSimpleExplan);
             buttonLike = itemView.findViewById(R.id.buttonLike);
-            imageViewCocktail = itemView.findViewById(R.id.imageViewCocktail);  // 초기화
+            imageViewCocktail = itemView.findViewById(R.id.imageViewCocktail);
+            textViewLikeCount = itemView.findViewById(R.id.textViewLikeCount); // 초기화
         }
     }
 
