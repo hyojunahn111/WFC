@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00ff0000"
+        android:textSize="20dp"
         android:drawableTop="@drawable/startcock_im"
-        android:text="화면을 클릭해서 다음 화면으로 넘어가주세요" />
+        android:text="로딩중입니다...\n잠시만 기다려주세요..." />
 
 
 
